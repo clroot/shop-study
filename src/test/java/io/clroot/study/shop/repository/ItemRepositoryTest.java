@@ -1,7 +1,10 @@
 package io.clroot.study.shop.repository;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.clroot.study.shop.constant.ItemSellStatus;
 import io.clroot.study.shop.entity.Item;
+import io.clroot.study.shop.entity.QItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -19,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestPropertySource(locations = "classpath:application-test.properties")
 @Transactional
 class ItemRepositoryTest {
+
+    @PersistenceContext
+    EntityManager em;
 
     @Autowired
     ItemRepository itemRepository;
@@ -119,6 +127,25 @@ class ItemRepositoryTest {
     public void findByItemDescriptionNativeTest() {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemDescriptionNative("1 설명");
+        assertTrue(itemList.size() > 0);
+        for (Item item : itemList) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    @DisplayName("Querydsl 조회 테스트 1")
+    public void queryDslTest() {
+        this.createItemList();
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QItem qItem = QItem.item;
+        JPAQuery<Item> query = queryFactory.selectFrom(qItem)
+                .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
+                .where(qItem.itemDescription.like("%" + "1 설명" + "%"))
+                .orderBy(qItem.price.desc());
+
+        List<Item> itemList = query.fetch();
+
         assertTrue(itemList.size() > 0);
         for (Item item : itemList) {
             System.out.println(item);
