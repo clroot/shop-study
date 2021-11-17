@@ -97,4 +97,20 @@ class OrderTest {
         int changedOrderItemCount = orderItemRepository.findByOrderId(order.getId()).size();
         assertNotEquals(changedOrderItemCount, orderItemCount);
     }
+
+    @Test
+    @DisplayName("지연 로딩 테스트")
+    public void lazyLoadingTest() {
+        Order order = createOrder();
+        Long orderItemId = order.getOrderItems().get(0).getId();
+        em.flush();
+        em.clear();
+
+        OrderItem orderItem =
+                orderItemRepository.findById(orderItemId).orElseThrow(EntityNotFoundException::new);
+        System.out.println("Order class: " + orderItem.getOrder().getClass());
+        System.out.println("====================");
+        System.out.println("OrderDate: " + orderItem.getOrder().getOrderDate());
+        System.out.println("====================");
+    }
 }
