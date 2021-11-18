@@ -14,11 +14,11 @@ import javax.persistence.*;
 public class Cart {
 
     @Id
-    @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "cart_id")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 }
