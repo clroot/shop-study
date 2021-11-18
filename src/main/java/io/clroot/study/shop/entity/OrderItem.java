@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "order_item")
 @Getter
 @Setter
-public class OrderItem {
+public class OrderItem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,8 +27,4 @@ public class OrderItem {
     private int orderPrice;
 
     private int quantity;
-
-    private LocalDateTime regTime;
-
-    private LocalDateTime updateTime;
 }
