@@ -34,3 +34,4 @@ build/
 
 ### secrets ###
 /src/main/resources/application-datasource.properties
+/src/main/resources/application-file-upload.properties
