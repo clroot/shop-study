@@ -2,11 +2,14 @@ package io.clroot.study.shop.service;
 
 import io.clroot.study.shop.dto.ItemFormDTO;
 import io.clroot.study.shop.dto.ItemImgDTO;
+import io.clroot.study.shop.dto.ItemSearchDTO;
 import io.clroot.study.shop.entity.Item;
 import io.clroot.study.shop.entity.ItemImg;
 import io.clroot.study.shop.repository.ItemImgRepository;
 import io.clroot.study.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,5 +72,9 @@ public class ItemService {
         }
 
         return item.getId();
+    }
+
+    public Page<Item> getAdminItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
+        return itemRepository.getAdminItemPage(itemSearchDTO, pageable);
     }
 }
