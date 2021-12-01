@@ -3,6 +3,7 @@ package io.clroot.study.shop.service;
 import io.clroot.study.shop.dto.ItemFormDTO;
 import io.clroot.study.shop.dto.ItemImgDTO;
 import io.clroot.study.shop.dto.ItemSearchDTO;
+import io.clroot.study.shop.dto.MainItemDTO;
 import io.clroot.study.shop.entity.Item;
 import io.clroot.study.shop.entity.ItemImg;
 import io.clroot.study.shop.repository.ItemImgRepository;
@@ -76,5 +77,9 @@ public class ItemService {
 
     public Page<Item> getAdminItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
         return itemRepository.getAdminItemPage(itemSearchDTO, pageable);
+    }
+
+    public Page<MainItemDTO> getMainItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
+        return itemRepository.getMainItemPage(itemSearchDTO, pageable);
     }
 }
