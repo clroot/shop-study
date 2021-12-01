@@ -1,6 +1,7 @@
 package io.clroot.study.shop.entity;
 
 import io.clroot.study.shop.constant.ItemSellStatus;
+import io.clroot.study.shop.dto.ItemFormDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,4 +34,12 @@ public class Item extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;
+
+    public void updateItem(ItemFormDTO itemFormDTO) {
+        this.itemName = itemFormDTO.getItemName();
+        this.price = itemFormDTO.getPrice();
+        this.stockQuantity = itemFormDTO.getStockQuantity();
+        this.itemDescription = itemFormDTO.getItemDescription();
+        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+    }
 }
